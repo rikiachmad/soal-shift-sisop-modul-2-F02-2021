@@ -58,7 +58,8 @@ void makeDir(char date[])
 void download(char date2[], char link[], char folder[])
 {
   strcat(folder,date2);
-  char *argv[] = {"/usr/bin/wget","-O",folder, link, NULL};
+  strcat(folder,".jpeg");
+  char *argv[] = {"/usr/bin/wget", "-bq","-O",folder, link, NULL};
   execv("/usr/bin/wget" ,argv);
 }
 
@@ -112,9 +113,9 @@ int main(int argc, const char* argv[]) {
   }
   createKiller(argv,(int)sid);
 
-  //close(STDIN_FILENO);
-  //close(STDOUT_FILENO);
- // close(STDERR_FILENO);
+  close(STDIN_FILENO);
+  close(STDOUT_FILENO);
+  close(STDERR_FILENO);
 
   while (1) {
     pid_t child_id;
@@ -160,7 +161,6 @@ int main(int argc, const char* argv[]) {
             strftime (date2, 80, "%Y-%m-%d_%H:%M:%S", dates);
             if(child4_id==0)
               download(date2, link, folder);
-            printf("i: %d\n", i);
             sleep(5);
           }
           makeFile(folder);
