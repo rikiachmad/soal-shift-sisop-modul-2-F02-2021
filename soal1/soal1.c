@@ -19,10 +19,5 @@ int main() {
     
     char *argv[] = {"mkdir", "-p", "Fylm", "Musyik", "Pyoto", NULL};
     execv("/bin/mkdir", argv);
-  } else {
-    // this is parent
-    while ((wait(&status)) > 0);
-    char *argv[] = {"touch", "folderku/fileku.txt", NULL};
-    execv("/usr/bin/touch", argv);
-  }
+  } 
 }
