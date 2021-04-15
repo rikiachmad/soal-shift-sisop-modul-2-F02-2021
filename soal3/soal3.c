@@ -58,7 +58,6 @@ void makeDir(char date[])
 void download(char date2[], char link[], char folder[])
 {
   strcat(folder,date2);
-  strcat(folder,".jpeg");
   char *argv[] = {"/usr/bin/wget", "-bq","-O",folder, link, NULL};
   execv("/usr/bin/wget" ,argv);
 }
