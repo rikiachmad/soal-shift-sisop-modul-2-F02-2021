@@ -179,9 +179,9 @@ int main() {
 		char *linkmusik="drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download";
 		char *linkfilm="drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download";
 	
-		char *Foto="Foto_for_Stevany";
-		char *Film="Film_for_Stevany";
-		char *Musik="Musik_for_Stevany";
+		char *Foto="Foto_for_Stevany.zip";
+		char *Film="Film_for_Stevany.zip";
+		char *Musik="Musik_for_Stevany.zip";
 
 		char *foto="Pyoto";
 		char *musik="Musyik";
