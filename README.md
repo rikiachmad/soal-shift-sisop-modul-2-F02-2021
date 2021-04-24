@@ -34,6 +34,7 @@ void makeDir(char date[])
   execv("/bin/mkdir", argv);
 }
 ```
+![image](https://user-images.githubusercontent.com/74702068/115959634-5737ef80-a537-11eb-9b04-db14a7a118ae.png)
 
 ## Sub Soal-b
 Pada sub soal-b, setelah membuat direktori sesuai dengan permintaan sub-soal a, direktori yang telah dibuat tersebut diisi dengan 10 file gambar yang di download tiap 5 detik dengan link yang tertera dan format penamaan file yang sama seperti sub-soal a.
@@ -75,6 +76,8 @@ void download(char date2[], char link[], char folder[])
   execv("/usr/bin/wget" ,argv);
 }
 ```
+![image](https://user-images.githubusercontent.com/74702068/115959641-6323b180-a537-11eb-8ff0-eda54eb8642e.png)
+
 
 ## Sub Soal-c
 Setelah direktori terisi dengan 10 gambar, Program diharuskan membuat sebuah file status.txt yang berisi "Download Success" yang dienkripsi dengan teknik caesar cypher dengan shift 5.
@@ -134,6 +137,7 @@ void rmDir(char folder[])
     execv("/bin/rm", argv);
 }
 ```
+![image](https://user-images.githubusercontent.com/74702068/115959647-6f0f7380-a537-11eb-9958-237555c487e6.png)
 
 ## Sub soal-d dan soal-e
 untuk sub soal-d dan e, saya mengerjakannya sekaligus karena sub soal e merupakan lanjutan dari sub soal d.
@@ -172,3 +176,4 @@ void createKiller(const char* c[], int sid){
   fclose(outfile);
 }
 ```
+![image](https://user-images.githubusercontent.com/74702068/115959653-7a629f00-a537-11eb-9f95-cb6a7f1c44e4.png)
