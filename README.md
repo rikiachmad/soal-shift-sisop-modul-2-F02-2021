@@ -1,5 +1,175 @@
 # soal-shift-sisop-modul-2-F02-2021
+# Nomor 2
+ Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.<br/><br/>
+(a) Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.<br/><br/>
+(b) Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus membuat folder untuk setiap jenis peliharaan yang ada dalam zip. Karena kamu tidak mungkin memeriksa satu-persatu, maka program harus membuatkan folder-folder yang dibutuhkan sesuai dengan isi zip.
+Contoh: Jenis peliharaan kucing akan disimpan dalam “/petshop/cat”, jenis peliharaan kura-kura akan disimpan dalam “/petshop/turtle”.<br/><br/>
+(c) Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
+Contoh: “/petshop/cat/joni.jpg”. <br/><br/>
+(d) Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. Contoh: foto dengan nama “dog;baro;1_cat;joni;2.jpg” dipindah ke folder “/petshop/cat/joni.jpg” dan “/petshop/dog/baro.jpg”.<br/><br/>
+(e) Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
+```C
+nama : joni
+umur  : 3 tahun
 
+nama : miko
+umur  : 2 tahun
+
+```
+
+## Sub soal a
+Untuk mengekstrak file zip diperlukan untuk mengetahui letak awal dan tujuan dari file.
+```C
+char *username = getenv("USER");  //mendapatkan username dalam format string
+char destination[maxSize] = "/home/", sourceZip[maxSize];
+
+strcat(destination,username);
+strcpy(sourceZip,destination);
+strcat(sourceZip,"/Downloads/pets.zip"); //directory pets.zip
+strcat(destination,"/modul2");
+```
+String `username` digunakan untuk mengganti [user], sehingga akan otomatis mengetahui user sekarang. String `destination` adalah tempat untuk meletakkan file zip, sedangkan `sourceZip` adalah letak dari file zip. Karena tujuan letak file hasil ekstrak ada di "/home/[user]/modul2/petshop", maka perlu menginisialisasi awal menjadi "/home/" yang kemudian ditambah dengan username dan "/modul2". Begitu juga sumber file, hanya saja letakkan sesuai sumbernya.<br/><br/>
+
+Setelah itu buat direktori dari modul2 dengan execv yang mana sekarang `destination` telah masuk lebih dalam ke "/petshop". Perlu menggunakan `child` karena ada proses baru yang dilakukan yang jika tidak menggunakan `child`, maka program berhenti.
+```C
+  child1 = fork();
+  if(child1==0)
+  {
+    char *mkdirModul[] = {"mkdir", destination, NULL};
+    execv("/usr/bin/mkdir", mkdirModul);
+  }
+  while ((wait(&status)) > 0);
+
+  strcat(destination, "/petshop");
+```
+Kemudian ekstrak file zip ke tujuan.
+```C
+child = fork();
+  if(child == 0)
+  {
+      char *argv[] = {"unzip" , sourceZip, "-d", destination, NULL};
+      execv("/usr/bin/unzip", argv);
+  }
+  while ((wait(&status)) > 0);
+```
+Dari sini pasti terdapat folder yang tidak diinginkan, jadi harus memeriksanya di dalam direktori tujuan. Caranya adalah dengan melihat ekstensi dari file/folder yang ditunjuk. Jika '.jpg', maka itu adalah file yang ingin dikelompokkan, jika '.' atau '..' berarti merupakan folder sekarang atau folder parent. Selain itu bisa dihapus
+```C
+DIR *dp;
+struct dirent *ep;
+dp = opendir(destination);
+if (dp != NULL)
+{
+  while ((ep = readdir (dp))) {
+    if(is_suffix(ep->d_name,".jpg")){
+      createFolder(ep->d_name, ep->d_name, destination);
+    }
+
+    else if ( !strcmp(ep->d_name, ".") || !strcmp(ep->d_name, "..") );
+
+    else{
+      char to_remove[maxSize];
+      strcpy(to_remove, destination);
+      strcat(to_remove,"/");
+      strcat(to_remove, ep->d_name);
+      child = fork();
+      if(child == 0){
+        char *remove[] = {"rm", "-rf", to_remove, NULL};
+        execv("/usr/bin/rm", remove);
+      }
+      while ((wait(&status)) > 0);
+    }
+  }
+
+  (void) closedir (dp);
+}
+```
+## Sub soal b
+Prosedur `createFolder` melakukan passing direktori sekarang sehingga tidak perlu mengulang dari awal. Untuk mengetahui kategori setiap hewan adalah dengan memeriksa nama file sampai bertemu ';' pertama.
+```C
+for(j = 0; j<strlen(newName); j++){
+  category[j+1] = newName[j];
+  if(newName[j] == ';'){
+    category[j+1] = '\0';
+     break;
+   }
+}
+```
+Untuk membuat folder tiap kategori cukup hanya dengan menggabungkan direktori sekarang dengan nama kategori dan buat foldernya.
+```C
+char newFolder[maxSize];
+strcpy(newFolder, current_dir);
+strcat(newFolder, category);
+
+if(access(newFolder, F_OK) == -1){  //folder belum ada
+  child = fork();
+  if(child==0)
+  {
+    char *arg[] = {"mkdir", newFolder, NULL};  //command buat directory
+    execv("/usr/bin/mkdir", arg);  //menjalankan mkdir dari file c
+  }
+  while ((wait(&status)) > 0);
+}
+```
+## Sub soal c
+Jika ingin menamai file yang dipindah dengan nama hewan, kita dapat membuatnya dengan mengetahui namanya terlebih dahulu dengan mengetahui string di antara ';' pertama dan kedua (melanjutkan yang tadi).
+```C
+int counter = 0;j++;
+for(;j<strlen(newName)-4; j++){
+  if(newName[j] == ';'){
+    name[counter] = '\0';
+    break;
+  }
+  name[counter++] = newName[j];
+}
+```
+Untuk sesuai dengan spesifikasi yang diinginkan, copy filename menjadi nama yang baru di folder baru juga.
+```C
+char copy_file[maxSize];
+strcpy(copy_file, current_dir);
+strcat(copy_file, "/");
+strcat(copy_file, filename);
+
+
+char newPath[maxSize];
+strcpy(newPath, newFolder);
+strcat(newPath, "/");
+strcat(newPath, name);
+strcat(newPath, ".jpg");
+
+
+child = fork();
+if(child == 0){
+  char *argv[] = {"cp", copy_file, newPath};
+  execlp("cp", argv[0], argv[1], argv[2], NULL);
+}
+while ((wait(&status)) > 0);
+```
+## Sub soal d
+Karena bisa terdapat lebih dari satu hewan peliharaan, maka perlu untuk menghilangkan nama yang sudah diperiksa. Namun untuk menyalin file diperlukan nama file yang asli. Itulah kenapa filename tetap, sementara ada nama baru untuk mengetahui informasi hewan berikutnya.
+```C
+void createFolder(char *filename, char *newName, char *current_dir){
+  
+  bool more_than_one = false;
+  for(i=0;i<strlen(newName);i++)
+    if(newName[i] == '_'){
+      more_than_one = true;
+      break;
+    }
+```
+Sisanya sama seperti langkah atas.
+## Sub soal e
+File keterangan.txt diperlukan setiap folder, oleh karena itu perlu untuk membuat file lewat nama folder ditambah "/keterangan.txt".
+```C
+char keterangan[maxSize];
+strcpy(keterangan, newFolder);
+strcat(keterangan, "/keterangan.txt");
+```
+dan masukkan informasi yang diketahui ke file tersebut menggunakan 'a' karena informasi baru akan dimasukkan di bawahnya, bukan menggantikannya.
+```C
+FILE *fptr = fopen(keterangan, "a");
+fprintf(fptr, "nama : %s\numur : %s tahun\n\n", name, umur);
+fclose(fptr);
+```
 # Soal 3
 ## Sub Soal-a
 Pada Sub soal a, diminta untuk membuat sebuah direktori tiap 40 detik dengan nama sesuai dengan timestamp [YYYY-mm-dd_HH:ii:ss].
