@@ -253,6 +253,7 @@ strcat(sourceZip,"/Downloads/pets.zip"); //directory pets.zip
 strcat(destination,"/modul2");
 ```
 String `username` digunakan untuk mengganti [user], sehingga akan otomatis mengetahui user sekarang. String `destination` adalah tempat untuk meletakkan file zip, sedangkan `sourceZip` adalah letak dari file zip. Karena tujuan letak file hasil ekstrak ada di "/home/[user]/modul2/petshop", maka perlu menginisialisasi awal menjadi "/home/" yang kemudian ditambah dengan username dan "/modul2". Begitu juga sumber file, hanya saja letakkan sesuai sumbernya.<br/><br/>
+![WhatsApp Image 2021-04-25 at 15 07 12](https://user-images.githubusercontent.com/45300477/115985944-4be8d080-a5d8-11eb-8793-6742b0f470ad.jpeg)
 
 Setelah itu buat direktori dari modul2 dengan execv yang mana sekarang `destination` telah masuk lebih dalam ke "/petshop". Perlu menggunakan `child` karena ada proses baru yang dilakukan yang jika tidak menggunakan `child`, maka program berhenti.
 ```C
@@ -334,6 +335,8 @@ if(access(newFolder, F_OK) == -1){  //folder belum ada
   while ((wait(&status)) > 0);
 }
 ```
+![WhatsApp Image 2021-04-25 at 15 05 23](https://user-images.githubusercontent.com/45300477/115986011-8c484e80-a5d8-11eb-9b13-2469b92d3886.jpeg)
+
 ## Sub soal c
 Jika ingin menamai file yang dipindah dengan nama hewan, kita dapat membuatnya dengan mengetahui namanya terlebih dahulu dengan mengetahui string di antara ';' pertama dan kedua (melanjutkan yang tadi).
 ```C
@@ -368,6 +371,8 @@ if(child == 0){
 }
 while ((wait(&status)) > 0);
 ```
+![WhatsApp Image 2021-04-25 at 15 05 58](https://user-images.githubusercontent.com/45300477/115986019-9702e380-a5d8-11eb-8f3a-8c7ad7bb3d03.jpeg)
+
 ## Sub soal d
 Karena bisa terdapat lebih dari satu hewan peliharaan, maka perlu untuk menghilangkan nama yang sudah diperiksa. Namun untuk menyalin file diperlukan nama file yang asli. Itulah kenapa filename tetap, sementara ada nama baru untuk mengetahui informasi hewan berikutnya.
 ```C
@@ -394,6 +399,8 @@ FILE *fptr = fopen(keterangan, "a");
 fprintf(fptr, "nama : %s\numur : %s tahun\n\n", name, umur);
 fclose(fptr);
 ```
+![WhatsApp Image 2021-04-25 at 15 06 28](https://user-images.githubusercontent.com/45300477/115985977-691d9f00-a5d8-11eb-8c15-b22a12927bee.jpeg)
+
 # Soal 3
 ## Sub Soal-a
 Pada Sub soal a, diminta untuk membuat sebuah direktori tiap 40 detik dengan nama sesuai dengan timestamp [YYYY-mm-dd_HH:ii:ss].
