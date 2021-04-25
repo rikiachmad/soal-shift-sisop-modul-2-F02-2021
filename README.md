@@ -70,6 +70,7 @@ void unzip(char *array){
         }
 }
 ```
+
 ### Output
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115980962-b25ef600-a5ba-11eb-919e-b8ee562ccd20.PNG">
 ## Sub soal d Memindahkan hasil ekstrak file ke direktori yang sudah dibuat pada soal 1a
