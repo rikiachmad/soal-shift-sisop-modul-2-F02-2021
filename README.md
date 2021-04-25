@@ -105,7 +105,7 @@ Karena file yang ingin dipindah hanya isi foldernya saja, maka kita tambahkan "/
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981753-51d2b780-a5c0-11eb-97a4-c9d22ef608c9.JPG">
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981775-79298480-a5c0-11eb-9f3b-ee4e9c370a74.JPG">
 
-## Sub soal e membuat daemon yang menjalankan soal 1a-1d yang berjalan pada tanggal 9 April pukul 16:22
+## Sub soal e membuat daemon yang menjalankan soal 1a-1d dan berjalan pada tanggal 9 April pukul 16:22
 ```
 	char task1[]="09-Apr 16:22";
     	char task2[]="09-Apr 22:22";
@@ -160,8 +160,8 @@ Karena file yang ingin dipindah hanya isi foldernya saja, maka kita tambahkan "/
 ```
 Perintah 
 ```struct tm *now = localtime(&waktu)``` dan ```strftime(ultah, sizeof(ultah), "%d-%b %H:%M", now);``` digunakan untuk mencetak waktu sekarang dengan format "dddd yyyy-mm--dd hh:mm:ss zzz". Karena task yang tertera pada soal tidak semua dilaksanakan secara bersamaan, maka disini kami menggunakan dua variabel waktu yaitu task1 & task2. Task1 akan dijalankan pada tanggal 9 April pukul 16:22 yaitu perintah membuat direktori, mendownload file, mengekstrak file, dan memindahkan file. 
-### Sub saol f membuat daemon untuk membuat file zip dari folder Musyik, Fylm, dan Pyoto dengan nama Lopyu_Stevany.zip yang akan dijalankan pada tanggal 9 April pukul 22:22
-Sama seperti daemon sebelumnya, kami menggunakan variabel task2 untuk menjalankan perintah men-zip filenya sekaligus untuk menghapus semua folder yang ada, hingga menyisakan hanya file .zipnya saja. 
+## Sub soal f membuat daemon untuk membuat file zip dari folder Musyik, Fylm, dan Pyoto dengan nama Lopyu_Stevany.zip yang akan dijalankan pada tanggal 9 April pukul 22:22
+Sama seperti daemon sebelumnya, kami menggunakan variabel task2 untuk menjalankan perintah men-zip filenya sekaligus untuk menghapus semua folder yang ada, hingga hanya menyisakan file .zipnya saja. 
 Untuk menghapus foldernya kami membuat fungsi hapus, adapun fungsinya sebagai berikut:
 ```
 void hapus(char *array){
