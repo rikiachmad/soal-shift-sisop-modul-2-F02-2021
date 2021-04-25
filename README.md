@@ -50,7 +50,7 @@ void download(char *array, char *rename){
 <img width="228" alt="7" src="https://user-images.githubusercontent.com/67305615/115980846-ff8e9800-a5b9-11eb-9ac6-94c6a9d4ada3.PNG">
 ## Sub soal c Mengekstrak zip yang telah didownload
 Untuk mengekstrak zipnya kami menggunakan fungsi unzip, adapun fungsinya sebagai berikut:
-```C
+```
 void unzip(char *array){
 	pid_t child_id;
         int status;
@@ -74,7 +74,7 @@ void unzip(char *array){
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115980962-b25ef600-a5ba-11eb-919e-b8ee562ccd20.PNG">
 ## Sub soal d Memindahkan hasil ekstrak file ke direktori yang sudah dibuat pada soal 1a
 Untuk memindahkan file ekstraknya kami menggunakan fungsi pindah, adapun fungsinya sebagai berikut:
-```C
+```
 void pindah(char *source, char *target){
 	char arr[999] = "/home/fika/Praktikum2/";
 	strcat(arr,source);	
@@ -98,11 +98,9 @@ void pindah(char *source, char *target){
 ```
 Karena file yang ingin dipindah hanya isi foldernya saja, maka kita tambahkan "/." pada parameter arraynya, dapat dilihat pada line 81.
 ### Output
-![9](https://user-images.githubusercontent.com/67305615/115981250-a5db9d00-a5bc-11eb-87f7-67ddcbbd3a9d.JPG)
-![10](https://user-images.githubusercontent.com/67305615/115981263-b0963200-a5bc-11eb-9349-7d5a13e22502.JPG)
-![11](https://user-images.githubusercontent.com/67305615/115981272-b4c24f80-a5bc-11eb-9239-1fc2a74d7ec0.JPG)
-
-
+<img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981747-4d0e0380-a5c0-11eb-9015-ad08d61835b5.JPG">
+<img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981753-51d2b780-a5c0-11eb-97a4-c9d22ef608c9.JPG">
+<img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981775-79298480-a5c0-11eb-9f3b-ee4e9c370a74.JPG">
 
 # Nomor 2
  Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.<br/><br/>
