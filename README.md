@@ -4,7 +4,7 @@ Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya p
 Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi. (a) Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg (b) untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :). (c) Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta (d) memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan). (e) Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany). (f) Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
 ## Sub soal a Membuat direktori Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg
 Untuk membuat direktorinya kami menggunakan fungsi berikut:
-```C
+```
 void makefolder(char *array){
 	pid_t child_id;
 	int status;
@@ -25,9 +25,9 @@ void makefolder(char *array){
 Fungsi makefolder memiliki 1 parameter dan kami deklarasikan char pointer argv untuk meletakkan command sebelum dieksekusi dengan execv. Kemudian dieksekusi dengan perintah execute("/bin/mkdir",argv). 
 ### Output
 <img width="196" alt="6" src="https://user-images.githubusercontent.com/67305615/115980689-dd484a80-a5b8-11eb-872b-55d83d0c03d5.PNG">
-##Sub soal b Mengunduh musik, film, dan foto
+## Sub soal b Mengunduh musik, film, dan foto
 Untuk mengunduh file tersebut kami menggunakan fungsi berikut:
-```C
+```
 void download(char *array, char *rename){
 	pid_t child_id;
         int status;
