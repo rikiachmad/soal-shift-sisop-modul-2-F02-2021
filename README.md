@@ -105,6 +105,124 @@ Karena file yang ingin dipindah hanya isi foldernya saja, maka kita tambahkan "/
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981753-51d2b780-a5c0-11eb-97a4-c9d22ef608c9.JPG">
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115981775-79298480-a5c0-11eb-9f3b-ee4e9c370a74.JPG">
 
+## Sub soal e membuat daemon yang menjalankan soal 1a-1d yang berjalan pada tanggal 9 April pukul 16:22
+```
+	char task1[]="09-Apr 16:22";
+    	char task2[]="09-Apr 22:22";
+	
+	time_t waktu =time(NULL);
+    	char ultah[99];
+    	struct tm *now = localtime(&waktu);
+    	strftime(ultah, sizeof(ultah), "%d-%b %H:%M", now);
+    	
+    	pid_t child_id;
+        int status;
+        child_id = fork();
+
+        if(child_id < 0){
+                exit(EXIT_FAILURE);
+        }
+        if(child_id == 0){
+        	char *linkfoto="drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download";
+		char *linkmusik="drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download";
+		char *linkfilm="drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download";
+	
+		char *Foto="Foto_for_Stevany.zip";
+		char *Film="Film_for_Stevany.zip";
+		char *Musik="Musik_for_Stevany.zip";
+
+		char *foto="Pyoto";
+		char *musik="Musyik";
+		char *film="Fylm";
+
+		char *FOTO="FOTO";
+		char *MUSIK="MUSIK";
+		char *FILM="FILM";
+
+        	if(strcmp(ultah,task1) == 0){
+    		
+			makefolder(foto);
+			makefolder(musik);
+			makefolder(film);
+
+			download(linkfoto,Foto);
+			download(linkmusik,Film);
+			download(linkfilm,Musik);
+
+			unzip("foto");
+			unzip("musik");
+			unzip("film");
+
+			pindah(FOTO, foto);
+			pindah(MUSIK, musik);
+			pindah(FILM, film);
+		}
+```
+Perintah 
+```struct tm *now = localtime(&waktu)``` dan ```strftime(ultah, sizeof(ultah), "%d-%b %H:%M", now);``` digunakan untuk mencetak waktu sekarang dengan format "dddd yyyy-mm--dd hh:mm:ss zzz". Karena task yang tertera pada soal tidak semua dilaksanakan secara bersamaan, maka disini kami menggunakan dua variabel waktu yaitu task1 & task2. Task1 akan dijalankan pada tanggal 9 April pukul 16:22 yaitu perintah membuat direktori, mendownload file, mengekstrak file, dan memindahkan file. 
+### Sub saol f membuat daemon untuk membuat file zip dari folder Musyik, Fylm, dan Pyoto dengan nama Lopyu_Stevany.zip yang akan dijalankan pada tanggal 9 April pukul 22:22
+Sama seperti daemon sebelumnya, kami menggunakan variabel task2 untuk menjalankan perintah men-zip filenya sekaligus untuk menghapus semua folder yang ada, hingga menyisakan hanya file .zipnya saja. 
+Untuk menghapus foldernya kami membuat fungsi hapus, adapun fungsinya sebagai berikut:
+```
+void hapus(char *array){
+	char arr[999] = "/home/fika/Praktikum2/";
+        strcat(arr,array);    
+	strcat(arr,"/");        
+
+	pid_t child_id;
+        int status;
+        child_id = fork();
+
+        if(child_id < 0){
+                exit(EXIT_FAILURE);
+        }
+        if(child_id == 0){
+                char *argv[]={"rm","-rf",arr,NULL};
+                execv("/bin/rm",argv);
+        }else{
+                wait(&status);
+                return;
+        }
+}
+```
+Sedangkan, untuk menzip filenya fungsinya sebagai berikut:
+```
+void zip(char *dok1,char *dok2,char *dok3){
+        pid_t child_id;
+        int status;
+        child_id = fork();
+
+        if(child_id < 0){
+                exit(EXIT_FAILURE);
+        }
+        if(child_id == 0){
+                char *argv[]={"zip","-rm","Lopyu_Stevany",dok1,dok2,dok3,NULL};
+                execv("/bin/zip",argv);
+
+
+        }else{
+                wait(&status);
+                return;
+        }
+}
+```
+Kemudian, dibawah ini merupakan potongan source code pada int main untuk menjalankan perintah zip file dan hapus folder pada tanggal 9 april pukul 22:22
+```
+if(strcmp(ultah,task2) == 0){
+		
+	zip(foto,musik,film);
+	
+	hapus(FOTO);
+	hapus(MUSIK);
+	hapus(FILM);
+}
+```
+### Output
+<img width="257" alt="1" src="https://user-images.githubusercontent.com/67305615/115982259-dd9a1300-a5c3-11eb-8ba6-9e6a70a7d5ab.PNG">
+
+### Kendala yang dialami
+Menjalankan daemon sesuai dengan waktu yang diinginkan.
+
 # Nomor 2
  Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.<br/><br/>
 (a) Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.<br/><br/>
