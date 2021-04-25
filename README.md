@@ -26,7 +26,6 @@ Fungsi makefolder memiliki 1 parameter dan kami deklarasikan char pointer argv u
 ### Output
 <img width="196" alt="6" src="https://user-images.githubusercontent.com/67305615/115980689-dd484a80-a5b8-11eb-872b-55d83d0c03d5.PNG">
 
-## Sub soal b
 ## Sub soal b Mengunduh musik, film, dan foto
 Untuk mengunduh file tersebut kami menggunakan fungsi berikut:
 ```
@@ -50,6 +49,7 @@ void download(char *array, char *rename){
 ```
 ### Output
 <img width="228" alt="7" src="https://user-images.githubusercontent.com/67305615/115980846-ff8e9800-a5b9-11eb-9ac6-94c6a9d4ada3.PNG">
+
 ## Sub soal c Mengekstrak zip yang telah didownload
 Untuk mengekstrak zipnya kami menggunakan fungsi unzip, adapun fungsinya sebagai berikut:
 ```
@@ -72,9 +72,9 @@ void unzip(char *array){
         }
 }
 ```
-
 ### Output
 <img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115980962-b25ef600-a5ba-11eb-919e-b8ee562ccd20.PNG">
+
 ## Sub soal d Memindahkan hasil ekstrak file ke direktori yang sudah dibuat pada soal 1a
 Untuk memindahkan file ekstraknya kami menggunakan fungsi pindah, adapun fungsinya sebagai berikut:
 ```
