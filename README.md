@@ -1,4 +1,106 @@
 # soal-shift-sisop-modul-2-F02-2021
+# Nomoe 1
+Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya pacar, namun sudah putus sebelum pacaran. Ketika dia galau memikirkan mantan, ia selalu menonton https://www.youtube.com/watch?v=568DH_9CMKI untuk menghilangkan kesedihannya. Di lain hal Steven anak yang tidak amat sangat super membenci matkul sisop, beberapa jam setelah diputus oleh pacarnya dia menemukan wanita lain bernama Stevany, namun Stevany berkebalikan dengan Steven karena menyukai sisop. Steven ingin terlihat jago matkul sisop demi menarik perhatian Stevany. 
+Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi. (a) Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg (b) untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :). (c) Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta (d) memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan). (e) Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany). (f) Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
+## Sub soal a Membuat direktori Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg
+Untuk membuat direktorinya kami menggunakan fungsi berikut:
+```C
+void makefolder(char *array){
+	pid_t child_id;
+	int status;
+	child_id = fork();
+	
+	if(child_id < 0){
+		exit(EXIT_FAILURE);
+	}
+	if(child_id == 0){
+		char *argv[]={"mkdir",array,NULL};
+		execv("/bin/mkdir",argv);
+	}else{
+		wait(&status);
+		return;
+	}
+}
+```
+Fungsi makefolder memiliki 1 parameter dan kami deklarasikan char pointer argv untuk meletakkan command sebelum dieksekusi dengan execv. Kemudian dieksekusi dengan perintah execute("/bin/mkdir",argv). 
+### Output
+<img width="196" alt="6" src="https://user-images.githubusercontent.com/67305615/115980689-dd484a80-a5b8-11eb-872b-55d83d0c03d5.PNG">
+## Sub soal b Mengunduh musik, film, dan foto
+Untuk mengunduh file tersebut kami menggunakan fungsi berikut:
+```C
+void download(char *array, char *rename){
+	pid_t child_id;
+        int status;
+        child_id = fork();
+
+        if(child_id < 0){
+                exit(EXIT_FAILURE);
+        }
+        if(child_id == 0){
+                char *argv[]={"wget","-q",array,"-O",rename,NULL};
+	        execv("/bin/wget",argv);
+
+        }else{
+                wait(&status);
+                return;
+        }
+}
+```
+### Output
+<img width="228" alt="7" src="https://user-images.githubusercontent.com/67305615/115980846-ff8e9800-a5b9-11eb-9ac6-94c6a9d4ada3.PNG">
+## Sub soal c Mengekstrak zip yang telah didownload
+Untuk mengekstrak zipnya kami menggunakan fungsi unzip, adapun fungsinya sebagai berikut:
+```C
+void unzip(char *array){
+	pid_t child_id;
+        int status;
+        child_id = fork();
+
+        if(child_id < 0){
+                exit(EXIT_FAILURE);
+        }
+        if(child_id == 0){
+                char *argv[]={"unzip","-q",array,NULL};
+	        execv("/bin/unzip",argv);
+
+
+        }else{
+                wait(&status);
+                return;
+        }
+}
+```
+### Output
+<img width="315" alt="8" src="https://user-images.githubusercontent.com/67305615/115980962-b25ef600-a5ba-11eb-919e-b8ee562ccd20.PNG">
+## Sub soal d Memindahkan hasil ekstrak file ke direktori yang sudah dibuat pada soal 1a
+Untuk memindahkan file ekstraknya kami menggunakan fungsi pindah, adapun fungsinya sebagai berikut:
+```C
+void pindah(char *source, char *target){
+	char arr[999] = "/home/fika/Praktikum2/";
+	strcat(arr,source);	
+	strcat(arr,"/.");
+
+	pid_t child_id;
+        int status;
+        child_id = fork();
+
+        if(child_id < 0){
+                exit(EXIT_FAILURE);
+        }
+        if(child_id == 0){
+                char *argv[]={"cp","-r",arr,target,NULL};
+	        execv("/bin/cp",argv);
+        }else{
+                wait(&status);
+                return;
+        }
+}
+```
+Karena file yang ingin dipindah hanya isi foldernya saja, maka kita tambahkan "/." pada parameter arraynya, dapat dilihat pada line 81.
+### Output
+
+
+
 # Nomor 2
  Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.<br/><br/>
 (a) Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.<br/><br/>
