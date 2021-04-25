@@ -25,6 +25,7 @@ void makefolder(char *array){
 Fungsi makefolder memiliki 1 parameter dan kami deklarasikan char pointer argv untuk meletakkan command sebelum dieksekusi dengan execv. Kemudian dieksekusi dengan perintah execute("/bin/mkdir",argv). 
 ### Output
 <img width="196" alt="6" src="https://user-images.githubusercontent.com/67305615/115980689-dd484a80-a5b8-11eb-872b-55d83d0c03d5.PNG">
+## Sub soal b
 ## Sub soal b Mengunduh musik, film, dan foto
 Untuk mengunduh file tersebut kami menggunakan fungsi berikut:
 ```
